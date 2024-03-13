@@ -83,7 +83,13 @@ const NumResults = ({ movies }) => {
 };
 
 const NavBar = ({ children }) => {
-  return <nav className="nav-bar">{children}</nav>;
+  <Logo />;
+  return (
+    <nav className="nav-bar">
+      <Logo />
+      {children}
+    </nav>
+  );
 };
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
@@ -222,7 +228,6 @@ const App = () => {
   return (
     <>
       <NavBar>
-        <Logo />
         <Search />
         <NumResults movies={movies} />
       </NavBar>
