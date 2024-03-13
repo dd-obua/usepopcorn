@@ -74,22 +74,20 @@ const Search = () => {
     />
   );
 };
-
-const NumResults = () => {
+const NumResults = ({ movies }) => {
   return (
     <p className="num-results">
-      Found <strong>obua</strong> results
-      {/* Found <strong>{movies.length}</strong> results */}
+      Found <strong>{movies.length}</strong> results
     </p>
   );
 };
 
-const NavBar = () => {
+const NavBar = ({ movies }) => {
   return (
     <nav className="nav-bar">
       <Logo />
       <Search />
-      <NumResults />
+      <NumResults movies={movies} />
     </nav>
   );
 };
@@ -110,9 +108,7 @@ const Movie = ({ movie }) => {
   );
 };
 
-const MovieList = () => {
-  const [movies, setMovies] = useState(tempMovieData);
-
+const MovieList = ({ movies }) => {
   return (
     <ul className="list">
       {movies?.map((movie, index) => (
@@ -122,7 +118,7 @@ const MovieList = () => {
   );
 };
 
-const ListBox = () => {
+const ListBox = ({ movies }) => {
   const [isOpen1, setIsOpen1] = useState(true);
 
   return (
@@ -130,7 +126,7 @@ const ListBox = () => {
       <button className="btn-toggle" onClick={() => setIsOpen1((open) => !open)}>
         {isOpen1 ? '–' : '+'}
       </button>
-      {isOpen1 && <MovieList />}
+      {isOpen1 && <MovieList movies={movies} />}
     </div>
   );
 };
@@ -217,20 +213,22 @@ const WatchedBox = () => {
   );
 };
 
-const Main = () => {
+const Main = ({ movies }) => {
   return (
     <main className="main">
-      <ListBox />
+      <ListBox movies={movies} />
       <WatchedBox />
     </main>
   );
 };
 
 const App = () => {
+  const [movies, setMovies] = useState(tempMovieData);
+
   return (
     <>
-      <NavBar />
-      <Main />
+      <NavBar movies={movies} />
+      <Main movies={movies} />
     </>
   );
 };
