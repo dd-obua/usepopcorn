@@ -82,14 +82,8 @@ const NumResults = ({ movies }) => {
   );
 };
 
-const NavBar = ({ movies }) => {
-  return (
-    <nav className="nav-bar">
-      <Logo />
-      <Search />
-      <NumResults movies={movies} />
-    </nav>
-  );
+const NavBar = ({ children }) => {
+  return <nav className="nav-bar">{children}</nav>;
 };
 /////////////////////////////////////////////////////////////////////////////////////
 /////////////////////////////////////////////////////////////////////////////////////
@@ -227,7 +221,11 @@ const App = () => {
 
   return (
     <>
-      <NavBar movies={movies} />
+      <NavBar>
+        <Logo />
+        <Search />
+        <NumResults movies={movies} />
+      </NavBar>
       <Main movies={movies} />
     </>
   );
