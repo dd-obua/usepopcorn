@@ -1,7 +1,7 @@
 import { StrictMode, useState } from 'react';
 import { createRoot } from 'react-dom/client';
-// import App from './components/App';
-// import './css/styles.css';
+import App from './components/App';
+import './css/styles.css';
 import StarRating from './StarRating';
 
 const Test = () => {
@@ -20,15 +20,18 @@ const Test = () => {
 const root = createRoot(document.getElementById('root'));
 root.render(
   <StrictMode>
-    {/* <App /> */}
+    <App />
+  </StrictMode>
+);
 
-    <StarRating maxRating={5} defaultRating={3} />
+// StarRating
+{
+  /* <StarRating maxRating={5} defaultRating={3} />
     <StarRating
       color="green"
       size={36}
       className="test"
       messages={['Terrible', 'Bad', 'Okay', 'Good', 'Amazing']}
     />
-    <Test />
-  </StrictMode>
-);
+    <Test /> */
+}
