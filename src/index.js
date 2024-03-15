@@ -2,20 +2,20 @@ import { StrictMode, useState } from 'react';
 import { createRoot } from 'react-dom/client';
 import App from './components/App';
 import './css/styles.css';
-import StarRating from './StarRating';
+// import StarRating from './StarRating';
 
-const Test = () => {
-  const [movieRating, setMovieRating] = useState(0);
+// const Test = () => {
+//   const [movieRating, setMovieRating] = useState(0);
 
-  return (
-    <div>
-      <StarRating color="blue" maxRating={10} onSetRating={setMovieRating} />
-      <p>
-        This movie was rated {movieRating} star{movieRating === 1 ? '' : 's'}.
-      </p>
-    </div>
-  );
-};
+//   return (
+//     <div>
+//       <StarRating color="blue" maxRating={10} onSetRating={setMovieRating} />
+//       <p>
+//         This movie was rated {movieRating} star{movieRating === 1 ? '' : 's'}.
+//       </p>
+//     </div>
+//   );
+// };
 
 const root = createRoot(document.getElementById('root'));
 root.render(

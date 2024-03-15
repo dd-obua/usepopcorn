@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 const tempMovieData = [
   {
@@ -115,7 +115,7 @@ const MovieList = ({ movies }) => {
   );
 };
 
-const Box = ({ element }) => {
+const Box = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
 
   return (
@@ -123,7 +123,7 @@ const Box = ({ element }) => {
       <button className="btn-toggle" onClick={() => setIsOpen((open) => !open)}>
         {isOpen ? '–' : '+'}
       </button>
-      {isOpen && element}
+      {isOpen && children}
     </div>
   );
 };
@@ -196,15 +196,33 @@ const Main = ({ children }) => {
   return <main className="main">{children}</main>;
 };
 
+const Loader = () => {
+  return <p className="loader">Loading...</p>;
+};
+
 const KEY = '24bc28ba';
 
 const App = () => {
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
+  const [isLoading, setIsLoading] = useState(false);
 
-  fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=interstellar`)
-    .then((res) => res.json())
-    .then((data) => console.log(data.Search));
+  const query = 'interstellar';
+
+  useEffect(() => {
+    const fetchMovies = async () => {
+      setIsLoading(true);
+
+      const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=${query}`);
+      const data = await res.json();
+      setMovies(data.Search);
+
+      setIsLoading(false);
+    };
+    fetchMovies();
+
+    return () => console.log('Cleanup');
+  }, []);
 
   return (
     <>
@@ -214,15 +232,13 @@ const App = () => {
       </NavBar>
 
       <Main>
-        <Box element={<MovieList movies={movies} />} />
-        <Box
-          element={
-            <>
-              <WatchedSummary watched={watched} />
-              <WatchedMovieList watched={watched} />
-            </>
-          }
-        />
+        <Box>{isLoading ? <Loader /> : <MovieList movies={movies} />}</Box>
+        <Box>
+          <>
+            <WatchedSummary watched={watched} />
+            <WatchedMovieList watched={watched} />
+          </>
+        </Box>
       </Main>
     </>
   );
