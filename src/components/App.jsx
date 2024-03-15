@@ -228,6 +228,7 @@ const App = () => {
         if (!res.ok) throw new Error('Something went wrong with fetching movie data.');
 
         const data = await res.json();
+        if (data.Response === 'False') throw new Error('Movie not found.');
         setMovies(data.Search);
       } catch (error) {
         setErrorMsg(error.message);
