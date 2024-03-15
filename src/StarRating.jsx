@@ -64,6 +64,7 @@ const StarRating = ({
     setRating(rating);
     onSetRating(rating);
   };
+  
   const handleHoverIn = (rating) => setTempRating(rating);
   const handleHoverOut = (rating) => setTempRating(rating);
 

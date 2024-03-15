@@ -49,6 +49,9 @@ const tempWatchedData = [
 
 const average = (arr) => arr.reduce((acc, cur, i, arr) => acc + cur / arr.length, 0);
 
+/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
+// NavBar
 const Logo = () => {
   return (
     <div className="logo">
@@ -71,7 +74,6 @@ const Search = () => {
     />
   );
 };
-
 const NumResults = ({ movies }) => {
   return (
     <p className="num-results">
@@ -89,7 +91,8 @@ const NavBar = ({ children }) => {
     </nav>
   );
 };
-
+/////////////////////////////////////////////////////////////////////////////////////
+/////////////////////////////////////////////////////////////////////////////////////
 const Movie = ({ movie }) => {
   return (
     <li>
@@ -196,15 +199,9 @@ const Main = ({ children }) => {
   return <main className="main">{children}</main>;
 };
 
-const KEY = '24bc28ba';
-
 const App = () => {
-  const [movies, setMovies] = useState([]);
-  const [watched, setWatched] = useState([]);
-
-  fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=interstellar`)
-    .then((res) => res.json())
-    .then((data) => console.log(data.Search));
+  const [movies, setMovies] = useState(tempMovieData);
+  const [watched, setWatched] = useState(tempWatchedData);
 
   return (
     <>
@@ -222,7 +219,7 @@ const App = () => {
               <WatchedMovieList watched={watched} />
             </>
           }
-        />
+        ></Box>
       </Main>
     </>
   );
