@@ -1,3 +1,4 @@
+import userEvent from '@testing-library/user-event';
 import { useEffect, useState } from 'react';
 
 const tempMovieData = [
@@ -58,9 +59,7 @@ const Logo = () => {
   );
 };
 
-const Search = () => {
-  const [query, setQuery] = useState('');
-
+const Search = ({ query, setQuery }) => {
   return (
     <input
       className="search"
@@ -212,17 +211,17 @@ const ErrorMessage = ({ msg }) => {
 const KEY = '24bc28ba';
 
 const App = () => {
+  const [query, setQuery] = useState('');
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [errorMsg, setErrorMsg] = useState('');
 
-  const query = 'interstellar';
-
   useEffect(() => {
     const fetchMovies = async () => {
       try {
         setIsLoading(true);
+        setErrorMsg('');
 
         const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=${query}`);
         if (!res.ok) throw new Error('Something went wrong with fetching movie data.');
@@ -236,15 +235,22 @@ const App = () => {
         setIsLoading(false);
       }
     };
+
+    if (!movies.length) {
+      setMovies([]);
+      setErrorMsg('');
+      return;
+    }
+
     fetchMovies();
 
     return () => console.log('Cleanup');
-  }, []);
+  }, [query, movies.length]);
 
   return (
     <>
       <NavBar>
-        <Search />
+        <Search query={query} setQuery={setQuery} />
         <NumResults movies={movies} />
       </NavBar>
 
