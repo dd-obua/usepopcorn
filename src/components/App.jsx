@@ -1,4 +1,3 @@
-import userEvent from '@testing-library/user-event';
 import { useEffect, useState } from 'react';
 
 const tempMovieData = [
@@ -199,11 +198,11 @@ const Loader = () => {
   return <p className="loader">Loading...</p>;
 };
 
-const ErrorMessage = ({ msg }) => {
+const ErrorMessage = ({ message }) => {
   return (
     <p className="error">
       <span>⛔ </span>
-      {msg}
+      {message}
     </p>
   );
 };
@@ -211,41 +210,43 @@ const ErrorMessage = ({ msg }) => {
 const KEY = '24bc28ba';
 
 const App = () => {
-  const [query, setQuery] = useState('');
+  const [query, setQuery] = useState('inception');
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
-  const [errorMsg, setErrorMsg] = useState('');
+  const [error, setError] = useState('');
 
   useEffect(() => {
     const fetchMovies = async () => {
       try {
+        setError('');
         setIsLoading(true);
-        setErrorMsg('');
 
         const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=${query}`);
-        if (!res.ok) throw new Error('Something went wrong with fetching movie data.');
+
+        if (!res.ok) throw new Error('Something went wrong with fetching movies.');
 
         const data = await res.json();
-        if (data.Response === 'False') throw new Error('Movie not found.');
+        if (data.Response === 'False') throw new Error('Movie not found!');
+
         setMovies(data.Search);
       } catch (error) {
-        setErrorMsg(error.message);
+        setError(error.message);
       } finally {
         setIsLoading(false);
       }
     };
 
-    if (!movies.length) {
+    if (query.length < 1) {
       setMovies([]);
-      setErrorMsg('');
+      setError('');
       return;
     }
 
     fetchMovies();
 
     return () => console.log('Cleanup');
-  }, [query, movies.length]);
+  }, [query]);
 
   return (
     <>
@@ -257,8 +258,8 @@ const App = () => {
       <Main>
         <Box>
           {isLoading && <Loader />}
-          {!isLoading && !errorMsg && <MovieList movies={movies} />}
-          {errorMsg && <ErrorMessage msg={errorMsg} />}
+          {!isLoading && !error && <MovieList movies={movies} />}
+          {error && <ErrorMessage message={error} />}
         </Box>
         <Box>
           <>
