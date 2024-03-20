@@ -152,13 +152,18 @@ const MovieDetails = ({ selectedId, onCloseMovie }) => {
       setIsLoading(true);
       const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&i=${selectedId}`);
       const data = await res.json();
-      console.log(data);
       setMovie(data);
       setIsLoading(false);
     };
 
     getMovieDetails();
   }, [selectedId]);
+
+  // Change page title
+  useEffect(() => {
+    if (!title) return;
+    document.title = title;
+  }, [title]);
 
   return (
     <div className="details">
