@@ -317,8 +317,9 @@ const App = () => {
         if (data.Response === 'False') throw new Error('Movie not found!');
 
         setMovies(data.Search);
+        setError('');
       } catch (error) {
-        setError(error.message);
+        error.name !== 'AbortError' && setError(error.message);
       } finally {
         setIsLoading(false);
       }
