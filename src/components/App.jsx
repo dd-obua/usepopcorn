@@ -134,7 +134,7 @@ const MovieDetails = ({ selectedId, onCloseMovie }) => {
 
   const {
     Title: title,
-    Year: year,
+    // Year: year,
     Poster: poster,
     Runtime: runtime,
     imdbRating,
@@ -300,12 +300,16 @@ const App = () => {
   const handleClosetMovie = () => setSelectedId(null);
 
   useEffect(() => {
+    const controller = new AbortController();
+
     const fetchMovies = async () => {
       try {
         setError('');
         setIsLoading(true);
 
-        const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=${query}`);
+        const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=${query}`, {
+          signal: controller.signal,
+        });
 
         if (!res.ok) throw new Error('Something went wrong with fetching movies.');
 
@@ -328,7 +332,7 @@ const App = () => {
 
     fetchMovies();
 
-    return () => console.log('Cleanup');
+    return () => controller.abort();
   }, [query]);
 
   return (
