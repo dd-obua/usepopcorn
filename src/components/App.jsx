@@ -327,6 +327,7 @@ const App = () => {
         const data = await res.json();
         if (data.Response === 'False') throw new Error('Movie not found!');
 
+        handleClosetMovie();
         setMovies(data.Search);
         setError('');
       } catch (error) {
