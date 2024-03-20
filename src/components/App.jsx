@@ -147,6 +147,17 @@ const MovieDetails = ({ selectedId, onCloseMovie }) => {
 
   const [isLoading, setIsLoading] = useState(false);
 
+  // React to keypress
+  useEffect(() => {
+    const closeMovie = (e) => {
+      e.code === 'Escape' && onCloseMovie();
+    };
+
+    document.addEventListener('keydown', closeMovie);
+
+    return () => document.removeEventListener('keydown', closeMovie);
+  }, [onCloseMovie]);
+
   useEffect(() => {
     const getMovieDetails = async () => {
       setIsLoading(true);
@@ -289,7 +300,7 @@ const ErrorMessage = ({ message }) => {
 const KEY = '24bc28ba';
 
 const App = () => {
-  const [query, setQuery] = useState('inception');
+  const [query, setQuery] = useState('');
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
