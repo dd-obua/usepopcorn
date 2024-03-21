@@ -261,7 +261,7 @@ const App = () => {
   const [selectedId, setSelectedId] = useState(null);
 
   const handleSelectMovie = (id) => setSelectedId(id === selectedId ? null : id);
-  const handleClosetMovie = () => setSelectedId(null);
+  const handleCloseMovie = () => setSelectedId(null);
 
   useEffect(() => {
     const controller = new AbortController();
@@ -280,7 +280,7 @@ const App = () => {
         const data = await res.json();
         if (data.Response === 'False') throw new Error('Movie not found!');
 
-        handleClosetMovie();
+        handleCloseMovie();
         setMovies(data.Search);
         setError('');
       } catch (error) {
@@ -318,7 +318,7 @@ const App = () => {
         </Box>
         <Box>
           {selectedId ? (
-            <MovieDetails selectedId={selectedId} onCloseMovie={handleClosetMovie} />
+            <MovieDetails selectedId={selectedId} onCloseMovie={handleCloseMovie} />
           ) : (
             <>
               <WatchedSummary watched={watched} />
