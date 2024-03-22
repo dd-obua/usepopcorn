@@ -2,7 +2,6 @@ import { useState } from 'react';
 
 import NavBar from './navbar/NavBar';
 import Main from './main/Main';
-import Logo from './navbar/Logo';
 import Search from './navbar/Search';
 import NumResults from './navbar/NumResults';
 
@@ -37,7 +36,7 @@ export default function App() {
   return (
     <>
       <NavBar>
-        <Logo />
+        
         <Search query={query} setQuery={setQuery} />
         <NumResults movies={movies} />
       </NavBar>
