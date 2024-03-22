@@ -5,9 +5,10 @@ import Main from './main/Main';
 import Search from './navbar/Search';
 import NumResults from './navbar/NumResults';
 
-import ListBox from './main/ListBox';
-import WatchedMoviesBox from './main/WatchedMovieBox';
+import Box from './main/Box';
 import MovieList from './main/MovieList';
+import WatchedMoviesList from './main/WatchedMovieList';
+import WatchedSummary from './main/WatchedSummary';
 
 const tempMovieData = [
   {
@@ -69,10 +70,13 @@ export default function App() {
       </NavBar>
 
       <Main>
-        <ListBox>
+        <Box>
           <MovieList movies={movies} />
-        </ListBox>
-        <WatchedMoviesBox watched={watched} />
+        </Box>
+        <Box>
+          <WatchedSummary watched={watched} />
+          <WatchedMoviesList watched={watched} />
+        </Box>
       </Main>
     </>
   );
