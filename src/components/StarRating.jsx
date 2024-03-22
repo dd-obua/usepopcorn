@@ -6,9 +6,15 @@ const textStyle = { lineHeight: '1', margin: '0' };
 
 const starStyle = { width: '24px', cursor: 'pointer', display: 'block' };
 
-const Star = ({ onRate, full }) => {
+const Star = ({ onRate, full, onEnter, onLeave }) => {
   return (
-    <span role="button" style={starStyle} onClick={onRate}>
+    <span
+      role="button"
+      style={starStyle}
+      onClick={onRate}
+      onMouseEnter={onEnter}
+      onMouseLeave={onLeave}
+    >
       {full ? (
         <svg
           xmlns="http://www.w3.org/2000/svg"
@@ -38,18 +44,27 @@ const Star = ({ onRate, full }) => {
 };
 
 const StarRating = ({ maxRating = 5 }) => {
-  const [rating, setRating] = useState(1);
+  const [rating, setRating] = useState();
+  const [tempRating, setTempRating] = useState(0);
 
   const handleRating = (rating) => setRating(rating);
+  const handleEnter = (rating) => setTempRating(rating);
+  const handleLeave = (rating) => setTempRating(rating);
 
   return (
     <article style={containerStyle}>
       <p style={starContainerStyle}>
         {Array.from({ length: maxRating }, (_, i) => (
-          <Star key={i} onRate={() => handleRating(i + 1)} full={rating >= i + 1} />
+          <Star
+            key={i}
+            onRate={() => handleRating(i + 1)}
+            full={tempRating ? tempRating >= i + 1 : rating >= i + 1}
+            onEnter={() => handleEnter(i + 1)}
+            onLeave={() => handleLeave(0)}
+          />
         ))}
       </p>
-      <p style={textStyle}>{rating || ''}</p>
+      <p style={textStyle}>{tempRating || rating || ''}</p>
     </article>
   );
 };
