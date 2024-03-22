@@ -1,12 +1,14 @@
+import { useState } from 'react';
+
 const containerStyle = { display: 'flex', gap: '16px', alignItems: 'center' };
 const starContainerStyle = { display: 'flex' };
 const textStyle = { lineHeight: '1', margin: '0' };
 
 const starStyle = { width: '24px', cursor: 'pointer', display: 'block' };
 
-const Star = () => {
+const Star = ({ onRate }) => {
   return (
-    <span role="button" style={starStyle}>
+    <span role="button" style={starStyle} onClick={onRate}>
       <svg
         xmlns="http://www.w3.org/2000/svg"
         viewBox="0 0 20 20"
@@ -20,14 +22,15 @@ const Star = () => {
 };
 
 const StarRating = ({ maxRating = 5 }) => {
+  const [rating, setRating] = useState(0);
   return (
     <article style={containerStyle}>
       <p style={starContainerStyle}>
         {Array.from({ length: maxRating }, (_, i) => (
-          <Star key={i} />
+          <Star key={i} onRate={() => setRating(i + 1)} />
         ))}
       </p>
-      <p style={textStyle}>10</p>
+      <p style={textStyle}>{rating || ''}</p>
     </article>
   );
 };

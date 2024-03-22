@@ -21,8 +21,6 @@ const root = createRoot(document.getElementById('root'));
 root.render(
   <StrictMode>
     <StarRating maxRating={10} />
-    <StarRating maxRating={5} />
-    <StarRating maxRating={15} />
   </StrictMode>
 );
 
