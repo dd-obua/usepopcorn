@@ -6,7 +6,7 @@ import StarRating from './components/StarRating';
 
 const Test = () => {
   const [movieRating, setMovieRating] = useState(0);
-  
+
   return (
     <div>
       <StarRating color="blue" maxRating={10} onSetRating={setMovieRating} />
@@ -21,6 +21,7 @@ root.render(
     <StarRating maxRating={10} />
     <StarRating
       maxRating={5}
+      // maxRating={5}
       color="green"
       size={36}
       className="test"
