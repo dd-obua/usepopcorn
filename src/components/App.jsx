@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 
 import NavBar from './navbar/NavBar';
 import Main from './main/Main';
@@ -57,15 +57,29 @@ const tempWatchedData = [
   },
 ];
 
+const KEY = '24bc28ba';
+
 export default function App() {
-  const [query, setQuery] = useState('');
-  const [movies, setMovies] = useState(tempMovieData);
-  const [watched, setWatched] = useState(tempWatchedData);
+  // const [query, setQuery] = useState('');
+  const [movies, setMovies] = useState([]);
+  const [watched, setWatched] = useState([]);
+  const query = 'denis';
+
+  useEffect(() => {
+    const getMovies = async () => {
+      const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=${query}`);
+      const data = await res.json();
+      setMovies(data.Search);
+      console.log(data.Search);
+    };
+
+    getMovies();
+  }, []);
 
   return (
     <>
       <NavBar>
-        <Search query={query} setQuery={setQuery} />
+        {/* <Search query={query} setQuery={setQuery} /> */}
         <NumResults movies={movies} />
       </NavBar>
 
