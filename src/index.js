@@ -4,6 +4,17 @@ import App from './components/App';
 // import './css/styles.css';
 import StarRating from './components/StarRating';
 
+const Test = () => {
+  const [movieRating, setMovieRating] = useState(0);
+  
+  return (
+    <div>
+      <StarRating color="blue" maxRating={10} onSetRating={setMovieRating} />
+      <p>This movie was rated {movieRating} stars.</p>
+    </div>
+  );
+};
+
 const root = createRoot(document.getElementById('root'));
 root.render(
   <StrictMode>
@@ -15,6 +26,7 @@ root.render(
       className="test"
       messages={['Terrible', 'Bad', 'Okay', 'Good', 'Amazing']}
     />
+    <Test />
   </StrictMode>
 );
 

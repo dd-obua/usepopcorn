@@ -49,11 +49,15 @@ const StarRating = ({
   className = '',
   messages = [],
   defaultaRating = 0,
+  onSetRating,
 }) => {
   const [rating, setRating] = useState(defaultaRating);
   const [tempRating, setTempRating] = useState(defaultaRating);
 
-  const handleRating = (rating) => setRating(rating);
+  const handleRating = (rating) => {
+    setRating(rating);
+    onSetRating(rating);
+  };
   const handleEnter = (rating) => setTempRating(rating);
   const handleLeave = (rating) => setTempRating(rating);
 
