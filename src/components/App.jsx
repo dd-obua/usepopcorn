@@ -11,6 +11,7 @@ import ErrorMessage from './main/ErrorMessage';
 import MovieList from './main/MovieList';
 import WatchedMoviesList from './main/WatchedMovieList';
 import WatchedSummary from './main/WatchedSummary';
+import MovieDetails from './main/MovieDetails';
 
 const KEY = '24bc28ba';
 
@@ -20,6 +21,9 @@ export default function App() {
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
+  const [selectedId, setSelectedId] = useState(null);
+
+  const handleSelectMovie = (id) => setSelectedId(id);
 
   useEffect(() => {
     const getMovies = async () => {
@@ -60,13 +64,20 @@ export default function App() {
       <Main>
         <Box>
           {isLoading && <Loader />}
-          {!isLoading && !error && <MovieList movies={movies} />}
+          {!isLoading && !error && (
+            <MovieList movies={movies} onSelectMovie={handleSelectMovie} />
+          )}
           {error && <ErrorMessage message={error} />}
-          {/* {query.length >= 1 && error ? <ErrorMessage message={error} /> : ''} */}
         </Box>
         <Box>
-          <WatchedSummary watched={watched} />
-          <WatchedMoviesList watched={watched} />
+          {selectedId ? (
+            <MovieDetails selectedId={selectedId} />
+          ) : (
+            <>
+              <WatchedSummary watched={watched} />
+              <WatchedMoviesList watched={watched} />
+            </>
+          )}
         </Box>
       </Main>
     </>
