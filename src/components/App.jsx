@@ -13,7 +13,7 @@ import WatchedMoviesList from './main/WatchedMovieList';
 import WatchedSummary from './main/WatchedSummary';
 import MovieDetails from './main/MovieDetails';
 
-const KEY = '24bc28ba';
+export const KEY = '24bc28ba';
 
 export default function App() {
   const [query, setQuery] = useState('');
@@ -26,7 +26,7 @@ export default function App() {
   const handleSelectMovie = (id) => {
     setSelectedId((selectedId) => (id === selectedId ? null : id));
   };
-  
+
   const handleCloseMovie = () => setSelectedId(null);
 
   useEffect(() => {
