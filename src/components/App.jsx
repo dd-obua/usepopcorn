@@ -41,6 +41,12 @@ export default function App() {
       }
     };
 
+    if (!query.length) {
+      setMovies([]);
+      setError('');
+      return;
+    }
+
     getMovies();
   }, [query]);
 
@@ -53,9 +59,10 @@ export default function App() {
 
       <Main>
         <Box>
-          {isLoading ? <Loader /> : <MovieList movies={movies} />}
+          {isLoading && <Loader />}
           {!isLoading && !error && <MovieList movies={movies} />}
           {error && <ErrorMessage message={error} />}
+          {/* {query.length >= 1 && error ? <ErrorMessage message={error} /> : ''} */}
         </Box>
         <Box>
           <WatchedSummary watched={watched} />
