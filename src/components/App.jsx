@@ -15,17 +15,18 @@ import WatchedSummary from './main/WatchedSummary';
 const KEY = '24bc28ba';
 
 export default function App() {
-  // const [query, setQuery] = useState('');
+  const [query, setQuery] = useState('');
   const [movies, setMovies] = useState([]);
   const [watched, setWatched] = useState([]);
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
-  const query = 'denis;';
 
   useEffect(() => {
     const getMovies = async () => {
       try {
         setIsLoading(true);
+        setError('');
+
         const res = await fetch(`http://www.omdbapi.com/?apikey=${KEY}&s=${query}`);
         if (!res.ok) throw new Error('Something went wrong with fetching movies.');
 
@@ -41,12 +42,12 @@ export default function App() {
     };
 
     getMovies();
-  }, []);
+  }, [query]);
 
   return (
     <>
       <NavBar>
-        {/* <Search query={query} setQuery={setQuery} /> */}
+        <Search query={query} setQuery={setQuery} />
         <NumResults movies={movies} />
       </NavBar>
 
