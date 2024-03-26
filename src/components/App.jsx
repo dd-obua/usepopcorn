@@ -23,7 +23,11 @@ export default function App() {
   const [error, setError] = useState('');
   const [selectedId, setSelectedId] = useState(null);
 
-  const handleSelectMovie = (id) => setSelectedId(id);
+  const handleSelectMovie = (id) => {
+    setSelectedId((selectedId) => (id === selectedId ? null : id));
+  };
+  
+  const handleCloseMovie = () => setSelectedId(null);
 
   useEffect(() => {
     const getMovies = async () => {
@@ -71,7 +75,7 @@ export default function App() {
         </Box>
         <Box>
           {selectedId ? (
-            <MovieDetails selectedId={selectedId} />
+            <MovieDetails selectedId={selectedId} onCloseMovie={handleCloseMovie} />
           ) : (
             <>
               <WatchedSummary watched={watched} />
