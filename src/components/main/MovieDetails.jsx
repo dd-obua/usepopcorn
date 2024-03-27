@@ -3,11 +3,19 @@ import { KEY } from '../App';
 import StarRating from '../StarRating';
 import Loader from './Loader';
 
-const MovieDetails = ({ selectedId, onCloseMovie, onAddWatched, onSetRating }) => {
+const MovieDetails = ({
+  selectedId,
+  onCloseMovie,
+  onAddWatched,
+  onSetRating,
+  watched,
+}) => {
   const [movie, setMovie] = useState({});
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState('');
   const [userRating, setUserRating] = useState(0);
+
+  const isWatched = watched.map((movie) => movie.imdbID).includes(selectedId);
 
   const {
     Title: title,
@@ -83,11 +91,17 @@ const MovieDetails = ({ selectedId, onCloseMovie, onAddWatched, onSetRating }) =
 
           <section>
             <div className="rating">
-              <StarRating maxRating={10} onSetRating={setUserRating} />
-              {userRating > 0 && (
-                <button className="btn-add" onClick={handleAdd}>
-                  + Add to list
-                </button>
+              {!isWatched ? (
+                <>
+                  <StarRating maxRating={10} onSetRating={setUserRating} />
+                  {userRating > 0 && (
+                    <button className="btn-add" onClick={handleAdd}>
+                      + Add to list
+                    </button>
+                  )}
+                </>
+              ) : (
+                <p>You already rated this movie.</p>
               )}
             </div>
             <p>
