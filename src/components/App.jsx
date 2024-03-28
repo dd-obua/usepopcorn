@@ -64,6 +64,7 @@ export default function App() {
       return;
     }
 
+    handleCloseMovie();
     getMovies();
 
     return () => controller.abort();
