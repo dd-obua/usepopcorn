@@ -76,6 +76,12 @@ const MovieDetails = ({
     return () => (document.title = 'usePopcorn');
   }, [title]);
 
+  useEffect(() => {
+    const closeMovie = (e) => e.code === 'Escape' && onCloseMovie();
+    document.addEventListener('keydown', closeMovie);
+    return () => document.removeEventListener('keydown', closeMovie);
+  }, [onCloseMovie]);
+
   return (
     <div className="details">
       {isLoading ? (
