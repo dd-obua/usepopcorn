@@ -12,17 +12,15 @@ import MovieList from './main/MovieList';
 import WatchedMoviesList from './main/WatchedMovieList';
 import WatchedSummary from './main/WatchedSummary';
 import MovieDetails from './main/MovieDetails';
+
 import { useMovies } from '../useMovies';
+import { useLocalStorageState } from '../useLocalStorageState';
 
 export default function App() {
   const [query, setQuery] = useState('');
   const [selectedId, setSelectedId] = useState(null);
   const { movies, isLoading, error } = useMovies(query, handleCloseMovie);
-
-  const [watched, setWatched] = useState(() => {
-    const storedValue = localStorage.getItem('watched');
-    return JSON.parse(storedValue);
-  });
+  const [watched, setWatched] = useLocalStorageState([], 'watched');
 
   const handleSelectMovie = (id) => {
     setSelectedId((selectedId) => (id === selectedId ? null : id));
@@ -35,10 +33,6 @@ export default function App() {
   const handleDeleteWatched = (id) => {
     return setWatched((watched) => watched.filter((movie) => movie.imdbID !== id));
   };
-
-  useEffect(() => {
-    localStorage.setItem('watched', JSON.stringify(watched));
-  }, [watched]);
 
   return (
     <>
