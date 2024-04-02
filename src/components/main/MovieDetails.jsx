@@ -3,6 +3,8 @@ import { KEY } from '../../useMovies';
 import StarRating from '../StarRating';
 import Loader from './Loader';
 
+import { useKeyPress } from '../../useKeyPress';
+
 const MovieDetails = ({
   selectedId,
   onCloseMovie,
@@ -83,11 +85,7 @@ const MovieDetails = ({
     return () => (document.title = 'usePopcorn');
   }, [title]);
 
-  useEffect(() => {
-    const closeMovie = (e) => e.code === 'Escape' && onCloseMovie();
-    document.addEventListener('keydown', closeMovie);
-    return () => document.removeEventListener('keydown', closeMovie);
-  }, [onCloseMovie]);
+  useKeyPress('Escape', onCloseMovie);
 
   return (
     <div className="details">
