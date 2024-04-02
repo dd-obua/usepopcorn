@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
-import { KEY } from '../App';
+import { KEY } from '../../useMovies';
 import StarRating from '../StarRating';
 import Loader from './Loader';
 
