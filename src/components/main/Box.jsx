@@ -1,4 +1,4 @@
-import { useEffect, useState, useSyncExternalStore } from 'react';
+import { useState } from 'react';
 
 const Box = ({ children }) => {
   const [isOpen, setIsOpen] = useState(true);
